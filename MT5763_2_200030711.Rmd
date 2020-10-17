@@ -18,7 +18,66 @@ GitHub repository can be found at: https://github.com/acurtis869/MT5763_2_200030
 
 
 ## Methods
+First the data set was transformed to make it easier to analyse.
+```
+/* Import dataset */
+FILENAME REFFILE '/folders/myshortcuts/SASUniversityEdition/myfolders/MT5763/Coursework 2/Baldy.csv';
 
+PROC IMPORT DATAFILE=REFFILE
+	DBMS=CSV
+	OUT=MT5763.BALDYRAW;
+	GETNAMES=YES;
+RUN;
+
+/* Transfrom data to make it easier to analyse */
+
+/* Start by making a new table, with three columns for treatment, hair growth, and age */
+/* Create temporary tables for each treatment */
+DATA MT5763.LUXURIANT;
+SET MT5763.BALDYRAW;
+Treatment="Luxuriant";
+Growth = Luxuriant;
+Age = AgeLuxuriant;
+KEEP Treatment Growth Age
+RUN;
+
+DATA MT5763.PLACEBO;
+SET MT5763.BALDYRAW;
+Treatment="Placebo";
+Growth = Placebo;
+Age = AgePlacebo;
+KEEP Treatment Growth Age
+RUN;
+
+DATA MT5763.BALDBEGONE;
+SET MT5763.BALDYRAW;
+Treatment="BaldBeGone";
+Growth = BaldBeGone;
+Age = AgeBaldBeGone;
+KEEP Treatment Growth Age
+RUN;
+
+DATA MT5763.SKINHEADNOMORE;
+SET MT5763.BALDYRAW;
+Treatment="Skinheadnomore";
+Growth = Skinheadnomore;
+Age = AgeSkinheadnomore;
+KEEP Treatment Growth Age
+RUN;
+
+/* Now merge these temporary tables to create new table */
+DATA MT5763.Baldy;
+SET MT5763.LUXURIANT MT5763.PLACEBO MT5763.BALDBEGONE MT5763.SKINHEADNOMORE; 
+RUN;
+
+/* Transform growth from inches into mm */
+DATA MT5763.Baldy;
+SET MT5763.Baldy;
+Growth = Growth * 25.4;
+RUN;
+```
+
+`
 
 ## Results
 
