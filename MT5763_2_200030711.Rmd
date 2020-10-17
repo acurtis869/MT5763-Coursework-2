@@ -2,7 +2,8 @@
 title: "MT5763_2_200030711"
 author: "Alex Curtis"
 date: "17/10/2020"
-output: html_document
+output:
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
