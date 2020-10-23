@@ -85,6 +85,30 @@ Further to creating the plots, a statistical procedure was performed for each qu
 
 ## Results
 
+### Is there an effect of *Luxuriant* above and beyond the placebo?
+
+```
+PROC BOXPLOT DATA=MT5763.BALDY;
+PLOT Growth*Treatment; 
+WHERE Treatment = "Placebo" | Treatment = "Luxuriant";
+RUN;
+```
+```{r, echo=FALSE, out.width="70%", fig.align='center', fig.cap="Box-plot comparing distribution of hair growth for Luxuriant and the placebo"}
+knitr::include_graphics("Q1 Plot.png")
+```
+
+This plot provides fairly clear evidence that *Luxuriant* has a much greater effect on hair growth than that of the placebo. The average hair growth after one month with *Luxuriant* is around 0.5mm, whereas it is only 0.1mm with the placebo. This is clearly a fairly significant difference, however, this can be confirmed statistically using a t-test.
+
+```
+PROC TTEST SIDES=U DATA=MT5763.BALDY;
+WHERE Treatment = "Placebo" | Treatment = "Luxuriant";
+CLASS Treatment;
+VAR Growth;
+TITLE 'T-TEST OF EQUALITY OF MEANS'; 
+RUN;
+```
+
+This test confirms what the plot showed. The p-value was less than 0.0001 which provides very strong evidence that the means of the two groups are different. Therefore it can be said that *Luxuriant* has an effect above and beyond the placebo.
 
 ## Discussion
 
