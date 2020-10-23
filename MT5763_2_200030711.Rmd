@@ -110,6 +110,32 @@ RUN;
 
 This test confirms what the plot showed. The p-value was less than 0.0001 which provides very strong evidence that the means of the two groups are different. Therefore it can be said that *Luxuriant* has an effect above and beyond the placebo.
 
+### Is *Luxuriant* more effective than the existing treatments on the market?
+
+```
+PROC BOXPLOT DATA=MT5763.BALDY;
+PLOT Growth*Treatment; 
+WHERE Treatment NE "Placebo";
+RUN;
+```
+```{r, echo=FALSE, out.width="70%", fig.align='center', fig.cap="Box-plot comparing distribution of hair growth for Luxuriant against the existing treatments on the market"}
+knitr::include_graphics("Q2 Plot.png")
+```
+
+This plot actually suggests that *Luxuriant* is less effective than the other treatments on the market. *BaldBeGone* is clearly the most effective treatment at stimulating hair growth, with an average hair growth of around 1.5mm after a month - roughly 3 times that of *Luxuriant*. *SkinheadNoMore* also appears to be slightly more effective than *Luxuriant*, although the difference is not as large as it was with *BaldBeGone*. These findings are confirmed in the linear model created:
+
+```
+PROC GLM DATA = MT5763.BALDY;
+WHERE Treatment NE "Placebo";
+CLASS Treatment;
+MODEL Growth = Treatment/solution clparm;
+RUN;
+```
+
+which produces the model:
+
+$Growth = 0.738 + 0.686 x_{BaldBeGone} - 0.226 x_{Luxuriant}$
+
 ## Discussion
 
 
