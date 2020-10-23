@@ -19,7 +19,7 @@ GitHub repository can be found at: https://github.com/acurtis869/MT5763_2_200030
 
 
 ## Methods
-First the data set was transformed to make it easier to analyse.
+First the data set was transformed to make it easier to analyse. The data-wrangling comprised changing the table so that there were columns for treatment, hair growth and age, and also transforming the values for growth into millimetres from inches (as specified).
 ```
 /* Import dataset */
 FILENAME REFFILE '/folders/myshortcuts/SASUniversityEdition/myfolders/MT5763/Coursework 2/Baldy.csv';
@@ -78,7 +78,10 @@ Growth = Growth * 25.4;
 RUN;
 ```
 
-`
+In order to answer the questions posed, several plots were created to explore the data visually. To compare the effect of *Luxuriant* with that of the placebo and the other two treatments, the plots created were box-plots. These were chosen as they describe the distribution of the data very clearly and are very effective for performing an initial analysis. To explore the effect that age has, four scatter plots were produced (one for each treatment) and combined into a grid. This allows one to easily see if there is any relationship between age and hair growth for each treatment.
+
+Further to creating the plots, a statistical procedure was performed for each question to provide further evidence to any initial conclusions. To compare between *Luxuriant* and the placebo, a two-sample t-test was used as this compares the means of the two samples and produces a p-value that can be used to provide evidence for whether *Luxuriant* has an effect or not. For the other two questions a linear model was produced to gauge the effect of the existing treatments or the age variable. To compare with the existing treatments, this was a simple linear model with treatment as the predictor variable. For the age model, age and an interaction term were also added to see if the effect of age is different for each treatment.
+
 
 ## Results
 
