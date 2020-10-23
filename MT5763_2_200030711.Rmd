@@ -93,7 +93,7 @@ PLOT Growth*Treatment;
 WHERE Treatment = "Placebo" | Treatment = "Luxuriant";
 RUN;
 ```
-```{r, echo=FALSE, out.width="70%", fig.align='center', fig.cap="Box-plot comparing distribution of hair growth for Luxuriant and the placebo"}
+```{r, echo=FALSE, out.width="70%", fig.align='center', fig.cap="Box-plot comparing distribution of hair growth for Luxuriant and the placebo."}
 knitr::include_graphics("Q1 Plot.png")
 ```
 
@@ -118,7 +118,7 @@ PLOT Growth*Treatment;
 WHERE Treatment NE "Placebo";
 RUN;
 ```
-```{r, echo=FALSE, out.width="70%", fig.align='center', fig.cap="Box-plot comparing distribution of hair growth for Luxuriant against the existing treatments on the market"}
+```{r, echo=FALSE, out.width="70%", fig.align='center', fig.cap="Box-plot comparing distribution of hair growth for Luxuriant against the existing treatments on the market."}
 knitr::include_graphics("Q2 Plot.png")
 ```
 
@@ -135,6 +135,33 @@ RUN;
 which produces the model:
 
 $Growth = 0.738 + 0.686 x_{BaldBeGone} - 0.226 x_{Luxuriant}$
+
+### Is age relevant to any effect?
+
+```
+PROC SGPANEL data=MT5763.BALDY;
+PANELBY Treatment;
+SCATTER x=Age y=Growth;
+TITLE "Scatter Plot of Growth against Age";
+RUN;
+```
+```{r, echo=FALSE, out.width="70%", fig.align='center', fig.cap="Scatter plots to determine relationship between age and hair growth, separated by each treatment."}
+knitr::include_graphics("Q3 Plot.png")
+```
+
+There is not particularly any relationship to be seen for any of the treatments. All plots appear to suggest age and growth are uncorrelated. This can be further explored by creating a linear model.
+
+```
+PROC GLM DATA = MT5763.BALDY;
+CLASS Treatment;
+MODEL Growth = Treatment Age Treatment*Age/solution clparm;
+RUN;
+```
+```{r, echo=FALSE, out.width="70%", fig.align='center', fig.cap="Table showing the output of the linear model created to test the effect of age on hair growth."}
+knitr::include_graphics("Q3 Table.png")
+```
+
+This model confirms that age does not have any significant effect on hair growth. The p-values for all the interaction terms are over 0.2 which suggests there is little evidence to suggest they are significantly diffefent from zero. Further, the parameter for age has a p-value of over 0.8 which essentially provides no evidence that it has an effect on hair growth.
 
 ## Discussion
 
