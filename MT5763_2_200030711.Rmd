@@ -13,10 +13,10 @@ knitr::opts_chunk$set(echo = TRUE)
 GitHub repository can be found at: https://github.com/acurtis869/MT5763_2_200030711
 
 ## Abstract
-
+Based on the data provided, the effect of baldness treatment *Luxuriant* was analysed using various statistical tests. The analysis concluded that although *Luxuriant* is effective at stimulating hair growth, it is considerably less effective than other treatments already on the market. The effect of age was also analysed using linear modelling techniques. It was concluded that, based on the data, age is not a significant factor in the effectiveness of *Luxuriant*, or any of the other treatments currently available.
 
 ## Introduction
-
+Baldness affects up to half of all Caucasian males by middle age [1] and consequently, the industry for treating it is worth billions [2]. It is therefore important to test the effectiveness of new products on the market. The purpose of this report is to do exactly that, looking how a new treatment - *Luxuriant* - performs against other treatments, and how it affects baldness in men of different ages. These analyses will initially be performed visually, by creating plots, and then by the means of various statistical tests to gain a more objective insight.
 
 ## Methods
 After the data were read in, the data set was transformed to make it easier to analyse. The data-wrangling comprised changing the table so that there were columns for treatment, hair growth and age, and also transforming the values for growth into millimetres from inches (as specified).
@@ -168,3 +168,6 @@ The results of the analysis suggest that while *Luxuriant* is an effective treat
 The design of the experiment was fairly robust, although ideally the comparisons with the placebo and the other treatments should be done separately. Moving forward, it would be interesting to test the effect how much hair patients still have has on the amount of hair grown after treatment. This may allow *Luxuriant* to greater understand how their product works, and could be tested in a very similar way to here.
 
 ## References
+
+[1] https://www.sciencedirect.com/science/article/pii/S1359644608002043#bib1
+[2] https://www.sciencedirect.com/science/article/abs/pii/S1064740603001391
