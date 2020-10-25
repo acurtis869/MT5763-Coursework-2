@@ -19,7 +19,7 @@ GitHub repository can be found at: https://github.com/acurtis869/MT5763_2_200030
 
 
 ## Methods
-First the data set was transformed to make it easier to analyse. The data-wrangling comprised changing the table so that there were columns for treatment, hair growth and age, and also transforming the values for growth into millimetres from inches (as specified).
+After the data were read in, the data set was transformed to make it easier to analyse. The data-wrangling comprised changing the table so that there were columns for treatment, hair growth and age, and also transforming the values for growth into millimetres from inches (as specified).
 ```
 /* Import dataset */
 FILENAME REFFILE '/folders/myshortcuts/SASUniversityEdition/myfolders/MT5763/Coursework 2/Baldy.csv';
@@ -162,7 +162,9 @@ knitr::include_graphics("Q3 Table.png")
 
 This model confirms that age does not have any significant effect on hair growth. The p-values for all the interaction terms are over 0.2 which suggests there is little evidence to suggest they are significantly diffefent from zero. Further, the parameter for age has a p-value of over 0.8 which essentially provides no evidence that it has an effect on hair growth.
 
-## Discussion
+## Summary
 
+The results of the analysis suggest that while *Luxuriant* is an effective treatment for baldness, it underperforms significantly compared to the other treatments already available. The most effective treatment on the market is *BaldBeGone*, whilst *SkinheadNoMore* also performed slightly better than *Luxuriant*. The effect of age was concluded to be insignificant in how patients react to all the treatments.
+The design of the experiment was fairly robust, although ideally the comparisons with the placebo and the other treatments should be done separately. Moving forward, it would be interesting to test the effect how much hair patients still have has on the amount of hair grown after treatment. This may allow *Luxuriant* to greater understand how their product works, and could be tested in a very similar way to here.
 
 ## References
