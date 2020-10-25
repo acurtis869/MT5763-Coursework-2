@@ -97,7 +97,7 @@ RUN;
 knitr::include_graphics("Q1 Plot.png")
 ```
 
-This plot provides fairly clear evidence that *Luxuriant* has a much greater effect on hair growth than that of the placebo. The average hair growth after one month with *Luxuriant* is around 0.5mm, whereas it is only 0.1mm with the placebo. This is clearly a fairly significant difference, however, this can be confirmed statistically using a t-test.
+This plot provides fairly clear evidence that *Luxuriant* has a much greater effect on hair growth than that of the placebo. The average hair growth after one month with *Luxuriant* is around 0.5mm, whereas it is only 0.1mm with the placebo. This is clearly a fairly significant difference, however, this can be confirmed statistically using a Wilcoxon signed-rank test.
 
 ```
 PROC NPAR1WAY DATA=MT5763.BALDY;
