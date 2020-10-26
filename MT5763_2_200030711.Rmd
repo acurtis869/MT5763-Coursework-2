@@ -144,7 +144,7 @@ SCATTER x=Age y=Growth;
 TITLE "Scatter Plot of Growth against Age";
 RUN;
 ```
-```{r, echo=FALSE, out.width="70%", fig.align='center', fig.cap="Scatter plots to determine relationship between age and hair growth, separated by each treatment."}
+```{r, echo=FALSE, out.width="63%", fig.align='center', fig.cap="Scatter plots to determine relationship between age and hair growth, separated by each treatment."}
 knitr::include_graphics("Q3 Plot.png")
 ```
 
