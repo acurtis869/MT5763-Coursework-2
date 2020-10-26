@@ -16,7 +16,7 @@ GitHub repository can be found at: https://github.com/acurtis869/MT5763_2_200030
 Based on the data provided, the effect of baldness treatment *Luxuriant* was analysed using various statistical tests. The analysis concluded that although *Luxuriant* is effective at stimulating hair growth, it is considerably less effective than other treatments already on the market. The effect of age was also analysed using linear modelling techniques. It was concluded that, based on the data, age is not a significant factor in the effectiveness of *Luxuriant*, or any of the other treatments currently available.
 
 ## Introduction
-Baldness affects up to half of all Caucasian males by middle age [1] and consequently, the industry for treating it is worth billions [2]. It is therefore important to test the effectiveness of new products on the market. The purpose of this report is to do exactly that, looking how a new treatment - *Luxuriant* - performs against other treatments, and how it affects baldness in men of different ages. These analyses will initially be performed visually, by creating plots, and then by the means of various statistical tests to gain a more objective insight.
+Baldness affects up to half of all Caucasian males by middle age (Gan and Sinclair, 2005) and consequently, the industry for treating it is worth billions (Haber, 2004). It is therefore important to test the effectiveness of new products on the market. The purpose of this report is to do exactly that, looking how a new treatment - *Luxuriant* - performs against other treatments, and how it affects baldness in men of different ages. These analyses will initially be performed visually, by creating plots, and then by the means of various statistical tests to gain a more objective insight.
 
 ## Methods
 After the data were read in, the data set was transformed to make it easier to analyse. The data-wrangling comprised changing the table so that there were columns for treatment, hair growth and age, and also transforming the values for growth into millimetres from inches (as specified).
@@ -169,5 +169,8 @@ The design of the experiment was fairly robust, although ideally the comparisons
 
 ## References
 
-[1] https://www.sciencedirect.com/science/article/pii/S1359644608002043#bib1
-[2] https://www.sciencedirect.com/science/article/abs/pii/S1064740603001391
+[1] Ellis, J. and Sinclair, R., 2008. Male pattern baldness: current treatments, future prospects. Drug Discovery Today, [online] 13(17-18), pp.791-797. Available at: <https://www.sciencedirect.com/science/article/pii/S1359644608002043#bib1> [Accessed 25 October 2020].
+
+[2] Gan, D. and Sinclair, R., 2005. Prevalence of Male and Female Pattern Hair Loss in Maryborough. Journal of Investigative Dermatology Symposium Proceedings, [online] 10(3), pp.184-189. Available at: <https://www.sciencedirect.com/science/article/pii/S0022202X15525840> [Accessed 26 October 2020].
+
+[3] Haber, R., 2004. Pharmacologic management of pattern hair loss. Facial Plastic Surgery Clinics of North America, [online] 12(2), pp.181-189. Available at: <https://www.sciencedirect.com/science/article/abs/pii/S1064740603001391> [Accessed 25 October 2020].
