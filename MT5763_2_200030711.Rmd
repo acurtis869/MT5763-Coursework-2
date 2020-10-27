@@ -1,7 +1,7 @@
 ---
-title: "MT5763_2_200030711"
+title: "Statistical analysis on the effectiveness of a treatment for male pattern baldness"
 author: "Alex Curtis"
-date: "17/10/2020"
+date: "27/10/2020"
 output:
   pdf_document: default
 ---
@@ -78,9 +78,9 @@ Growth = Growth * 25.4;
 RUN;
 ```
 
-In order to answer the questions posed, several plots were created to explore the data visually. To compare the effect of *Luxuriant* with that of the placebo and the other two treatments, the plots created were box-plots. These were chosen as they describe the distribution of the data very clearly and are very effective for performing an initial analysis. To explore the effect that age has, four scatter plots were produced (one for each treatment) and combined into a grid. This allows one to easily see if there is any relationship between age and hair growth for each treatment.
+In order to answer the questions posed, several plots were created to explore the data visually. To compare the effect of *Luxuriant* with that of the placebo and the other two treatments, the plots created were box-plots. These were chosen as they describe the distribution of the data very clearly and are very effective for performing an initial analysis. To explore the effect that age has, four scatter plots were produced (one for each treatment) and combined into a grid. This allows one to easily see if there is any relationship between age and hair growth for each treatment and compare between treatments.
 
-Further to creating the plots, a statistical procedure was performed for each question to provide further evidence to any initial conclusions. To compare between *Luxuriant* and the placebo, a two-sample t-test could not be used due to the non-constant variance between the groups. Therefore, a non-parametric equivalent - the Wilcoxon signed-rank test - was used to test whether the distributions were different. For the other two questions a linear model was produced to gauge the effect of the existing treatments or the age variable. To compare with the existing treatments, this was a simple linear model with treatment as the predictor variable. For the age model, age and an interaction term were also added to see if the effect of age is different for each treatment.
+Further to creating the plots, a statistical procedure was performed for each question to provide further evidence to any initial conclusions. To compare between *Luxuriant* and the placebo, a two-sample t-test could not be used due to the non-constant variance between the groups. Therefore, a non-parametric equivalent - the Wilcoxon signed-rank test - was used to test whether the distributions were significantly different. For the other two questions a linear model was produced to gauge the effect of the existing treatments and the age variable. To compare with the existing treatments, this was a simple linear model with treatment as the predictor variable. For the age model, age and an interaction term were also added to see if the effect of age is different for each treatment.
 
 
 ## Results
@@ -88,7 +88,8 @@ Further to creating the plots, a statistical procedure was performed for each qu
 ### Is there an effect of *Luxuriant* above and beyond the placebo?
 
 ```
-PROC BOXPLOT DATA=MT5763.BALDY;
+/* Create box-plot to compare Luxuriant with placebo */
+PROC BOXPLOT DATA=WORK.BALDY;
 PLOT Growth*Treatment; 
 WHERE Treatment = "Placebo" | Treatment = "Luxuriant";
 RUN;
@@ -97,10 +98,10 @@ RUN;
 knitr::include_graphics("Q1 Plot.png")
 ```
 
-This plot provides fairly clear evidence that *Luxuriant* has a much greater effect on hair growth than that of the placebo. The average hair growth after one month with *Luxuriant* is around 0.5mm, whereas it is only 0.1mm with the placebo. This is clearly a fairly significant difference, however, this can be confirmed statistically using a Wilcoxon signed-rank test.
+This plot provides fairly clear evidence that *Luxuriant* has a much greater effect on hair growth than that of the placebo. The average hair growth after one month with *Luxuriant* is around 15mm, whereas it is less than 5mm with the placebo. This is clearly a fairly significant difference, however, this can be confirmed statistically using a Wilcoxon signed-rank test.
 
 ```
-PROC NPAR1WAY DATA=MT5763.BALDY;
+PROC NPAR1WAY DATA=WORK.BALDY;
 WHERE Treatment = "Placebo" | Treatment = "Luxuriant";
 CLASS Treatment;
 VAR Growth;
@@ -112,7 +113,8 @@ This test confirms what the plot showed. The p-value was less than 0.0001 which 
 ### Is *Luxuriant* more effective than the existing treatments on the market?
 
 ```
-PROC BOXPLOT DATA=MT5763.BALDY;
+/* Create box-plot to compare different treatments */
+PROC BOXPLOT DATA=WORK.BALDY;
 PLOT Growth*Treatment; 
 WHERE Treatment NE "Placebo";
 RUN;
@@ -121,51 +123,54 @@ RUN;
 knitr::include_graphics("Q2 Plot.png")
 ```
 
-This plot actually suggests that *Luxuriant* is less effective than the other treatments on the market. *BaldBeGone* is clearly the most effective treatment at stimulating hair growth, with an average hair growth of around 1.5mm after a month - roughly 3 times that of *Luxuriant*. *SkinheadNoMore* also appears to be slightly more effective than *Luxuriant*, although the difference is not as large as it was with *BaldBeGone*. These findings are confirmed in the linear model created:
+This plot actually suggests that *Luxuriant* is less effective than the other treatments on the market. *BaldBeGone* is clearly the most effective treatment at stimulating hair growth, with an average hair growth of over 30mm after a month - almost 3 times that of *Luxuriant*. *SkinheadNoMore* also appears to be slightly more effective than *Luxuriant*, although the difference is not as large as it was with *BaldBeGone*. These findings are confirmed in the linear model created:
 
 ```
-PROC GLM DATA = MT5763.BALDY;
+/* Create linear model with treatment as predictor, growth as response */
+PROC GLM DATA = WORK.BALDY;
 WHERE Treatment NE "Placebo";
 CLASS Treatment;
 MODEL Growth = Treatment/solution clparm;
 RUN;
 ```
 
-which produces the model:
+This produces the model:
 
-$Growth = 0.738 + 0.686 x_{BaldBeGone} - 0.226 x_{Luxuriant}$
+$Growth = 18.74 + 17.41 x_{BaldBeGone} - 5.74 x_{Luxuriant}$
 
 ### Is age relevant to any effect?
 
 ```
-PROC SGPANEL data=MT5763.BALDY;
+/* Create scatter plot on grid of hair growth against age, split by treatment */
+PROC SGPANEL data=WORK.BALDY;
 PANELBY Treatment;
 SCATTER x=Age y=Growth;
 TITLE "Scatter Plot of Growth against Age";
 RUN;
 ```
-```{r, echo=FALSE, out.width="63%", fig.align='center', fig.cap="Scatter plots to determine relationship between age and hair growth, separated by each treatment."}
+```{r, echo=FALSE, out.width="55%", fig.align='center', fig.cap="Scatter plots to determine relationship between age and hair growth, separated by each treatment."}
 knitr::include_graphics("Q3 Plot.png")
 ```
 
 There is not particularly any relationship to be seen for any of the treatments. All plots appear to suggest age and growth are uncorrelated. This can be further explored by creating a linear model.
 
 ```
-PROC GLM DATA = MT5763.BALDY;
+/* Create linear model adding age and an interaction term to previous model */
+PROC GLM DATA = WORK.BALDY;
 CLASS Treatment;
 MODEL Growth = Treatment Age Treatment*Age/solution clparm;
 RUN;
 ```
-```{r, echo=FALSE, out.width="70%", fig.align='center', fig.cap="Table showing the output of the linear model created to test the effect of age on hair growth."}
+```{r, echo=FALSE, out.width="60%", fig.align='center', fig.cap="Table showing the output of the linear model created to test the effect of age on hair growth."}
 knitr::include_graphics("Q3 Table.png")
 ```
 
-This model confirms that age does not have any significant effect on hair growth. The p-values for all the interaction terms are over 0.2 which suggests there is little evidence to suggest they are significantly diffefent from zero. Further, the parameter for age has a p-value of over 0.8 which essentially provides no evidence that it has an effect on hair growth.
+This model confirms that age does not have any significant effect on hair growth. The p-values for all the interaction terms are over 0.2 which suggests there is little evidence to suggest they are significantly different from zero. Further, the parameter for age has a p-value of over 0.8 which essentially provides no evidence that it has an effect on hair growth.
 
 ## Summary
 
 The results of the analysis suggest that while *Luxuriant* is an effective treatment for baldness, it underperforms significantly compared to the other treatments already available. The most effective treatment on the market is *BaldBeGone*, whilst *SkinheadNoMore* also performed slightly better than *Luxuriant*. The effect of age was concluded to be insignificant in how patients react to all the treatments.
-The design of the experiment was fairly robust, although ideally the comparisons with the placebo and the other treatments should be done separately. Moving forward, it would be interesting to test the effect how much hair patients still have has on the amount of hair grown after treatment. This may allow *Luxuriant* to greater understand how their product works, and could be tested in a very similar way to here.
+The design of the experiment was fairly robust, although ideally the comparisons with the placebo and the other treatments should be done separately. Moving forward, it would be interesting to test the effect how much hair patients still have would have on the amount of hair grown after treatment. This may allow *Luxuriant* to greater understand how their product works, and could be tested in a very similar way to here.
 
 ## References
 
