@@ -16,7 +16,7 @@ GitHub repository can be found at: https://github.com/acurtis869/MT5763_2_200030
 Based on the data provided, the effect of baldness treatment *Luxuriant* was analysed using various statistical tests. The analysis concluded that although *Luxuriant* is effective at stimulating hair growth, it is considerably less effective than other treatments already on the market. The effect of age was also analysed using linear modelling techniques. It was concluded that, based on the data, age is not a significant factor in the effectiveness of *Luxuriant*, or any of the other treatments currently available.
 
 ## Introduction
-Baldness affects up to half of all Caucasian males by middle age (Gan and Sinclair, 2005) and consequently, the industry for treating it is worth billions (Haber, 2004). It is therefore important to test the effectiveness of new products on the market. The purpose of this report is to do exactly that, looking how a new treatment - *Luxuriant* - performs against other treatments, and how it affects baldness in men of different ages. These analyses will initially be performed visually, by creating plots, and then by the means of various statistical tests to gain a more objective insight.
+Baldness affects up to half of all Caucasian males by middle age (Gan and Sinclair, 2005) and consequently, the industry for treating it is worth billions every year (Haber, 2004). It is therefore important to test the effectiveness of new products on the market. The purpose of this report is to do exactly that, looking at how a new treatment - *Luxuriant* - performs against other treatments, and how it affects baldness in men of different ages. These analyses will initially be performed visually, by creating plots, and then by the means of various statistical tests to gain a more objective insight.
 
 ## Methods
 After the data were read in, the data set was transformed to make it easier to analyse. The data-wrangling comprised changing the table so that there were columns for treatment, hair growth and age, and also transforming the values for growth into millimetres from inches (as specified).
@@ -26,7 +26,7 @@ FILENAME REFFILE '/folders/myshortcuts/SASUniversityEdition/myfolders/MT5763/Cou
 
 PROC IMPORT DATAFILE=REFFILE
 	DBMS=CSV
-	OUT=MT5763.BALDYRAW;
+	OUT=WORK.BALDYRAW;
 	GETNAMES=YES;
 RUN;
 
@@ -34,32 +34,32 @@ RUN;
 
 /* Start by making a new table, with three columns for treatment, hair growth, and age */
 /* Create temporary tables for each treatment */
-DATA MT5763.LUXURIANT;
-SET MT5763.BALDYRAW;
+DATA WORK.LUXURIANT;
+SET WORK.BALDYRAW;
 Treatment="Luxuriant";
 Growth = Luxuriant;
 Age = AgeLuxuriant;
 KEEP Treatment Growth Age
 RUN;
 
-DATA MT5763.PLACEBO;
-SET MT5763.BALDYRAW;
+DATA WORK.PLACEBO;
+SET WORK.BALDYRAW;
 Treatment="Placebo";
 Growth = Placebo;
 Age = AgePlacebo;
 KEEP Treatment Growth Age
 RUN;
 
-DATA MT5763.BALDBEGONE;
-SET MT5763.BALDYRAW;
+DATA WORK.BALDBEGONE;
+SET WORK.BALDYRAW;
 Treatment="BaldBeGone";
 Growth = BaldBeGone;
 Age = AgeBaldBeGone;
 KEEP Treatment Growth Age
 RUN;
 
-DATA MT5763.SKINHEADNOMORE;
-SET MT5763.BALDYRAW;
+DATA WORK.SKINHEADNOMORE;
+SET WORK.BALDYRAW;
 Treatment="Skinheadnomore";
 Growth = Skinheadnomore;
 Age = AgeSkinheadnomore;
@@ -67,13 +67,13 @@ KEEP Treatment Growth Age
 RUN;
 
 /* Now merge these temporary tables to create new table */
-DATA MT5763.Baldy;
-SET MT5763.LUXURIANT MT5763.PLACEBO MT5763.BALDBEGONE MT5763.SKINHEADNOMORE; 
+DATA WORK.Baldy;
+SET WORK.LUXURIANT WORK.PLACEBO WORK.BALDBEGONE WORK.SKINHEADNOMORE; 
 RUN;
 
 /* Transform growth from inches into mm */
-DATA MT5763.Baldy;
-SET MT5763.Baldy;
+DATA WORK.Baldy;
+SET WORK.Baldy;
 Growth = Growth * 25.4;
 RUN;
 ```
